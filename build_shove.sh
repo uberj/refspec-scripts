@@ -18,14 +18,14 @@ mv $SRC0/README.rst $SRC0/README
 sed s/README.rst/README/g $SRC0/setup.py > setup.py; mv setup.py $SRC0/
 
 function build_rpm () {
-    pushd $1
+    pushd $SRC0
         python setup.py bdist_rpm --source-only
         python setup.py bdist_rpm --spec-only --requires "pika>=0.9.13" 
         rpmbuild -ba --define "_topdir ${PWD}/build/bdist.linux-x86_64/rpm" dist/python-captain-shove.spec
 
         # TODO, don't hardcode the version
         cp build/bdist.linux-x86_64/rpm/RPMS/noarch/python-captain-shove-0.1.4-1.noarch.rpm $1
-    popd shove
+    popd $SRC0
 }
 
 function build_deb () {
