@@ -18,20 +18,20 @@ mv $SRC0/README.rst $SRC0/README
 sed s/README.rst/README/g $SRC0/setup.py > setup.py; mv setup.py $SRC0/
 
 function build_rpm () {
-    pushd shove
+    pushd $1
         python setup.py bdist_rpm --source-only
         python setup.py bdist_rpm --spec-only --requires "pika>=0.9.13" 
-        rpmbuild -ba --define "_topdir ${PWD}/build/bdist.linux-x86_64/rpm" dist/shove.spec
+        rpmbuild -ba --define "_topdir ${PWD}/build/bdist.linux-x86_64/rpm" dist/python-captain-shove.spec
 
         # TODO, don't hardcode the version
-        cp build/bdist.linux-x86_64/rpm/RPMS/noarch/shove-0.1.4-1.noarch.rpm $1
+        cp build/bdist.linux-x86_64/rpm/RPMS/noarch/python-captain-shove-0.1.4-1.noarch.rpm $1
     popd shove
 }
 
 function build_deb () {
     pushd $1
-        cp $RPM_DIR/shove-0.1.4-1.noarch.rpm .
-        alien --generate shove-0.1.4-1.noarch.rpm
+        cp $RPM_DIR/python-captain-shove-0.1.4-1.noarch.rpm .
+        alien --generate python-captain-shove-0.1.4-1.noarch.rpm
         cd shove-0.1.4/
         sed -i 's/Depends: ${shlibs:Depends}/Depends: python-pika (>= 0.9.13)/' debian/control
         dpkg-buildpackage -d -us -uc
