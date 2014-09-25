@@ -13,6 +13,9 @@ mkdir -p $RPM_DIR
 mkdir -p $DEB_DIR
 rm -rf $SRC0
 git clone --depth 1 -b $BRANCH --single-branch $REMOTE $SRC0
+# Need to rename this so that rpmbuilder will pick it up
+mv $SRC0/README.rst $SRC0/README
+sed s/README.rst/README/g $SRC0/setup.py > setup.py; mv setup.py $SRC0/
 
 function build_rpm () {
     pushd shove
