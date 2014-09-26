@@ -20,7 +20,7 @@ sed s/README.rst/README/g $SRC0/setup.py > setup.py; mv setup.py $SRC0/
 function build_rpm () {
     pushd $SRC0
         python setup.py bdist_rpm --source-only
-        python setup.py bdist_rpm --spec-only --requires "python-pika>=0.9.13" 
+        python setup.py bdist_rpm --spec-only --requires "python-pika >= 0.9.13" 
         rpmbuild -ba --define "_topdir ${PWD}/build/bdist.linux-x86_64/rpm" dist/python-captain-shove.spec
 
         # TODO, don't hardcode the version
