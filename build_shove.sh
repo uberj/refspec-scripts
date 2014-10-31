@@ -24,7 +24,7 @@ mv $SRC0/README.rst $SRC0/README
 sed s/README.rst/README/g $SRC0/setup.py > setup.py; mv setup.py $SRC0/
 
 function build_rpm () {
-    pushd shove
+    pushd $1
         python setup.py bdist_rpm --source-only
         python setup.py bdist_rpm --spec-only --requires "pika>=0.9.13" 
         rpmbuild -ba --define "_topdir ${PWD}/build/bdist.linux-x86_64/rpm" dist/$SHOVE_PKG_NAME.spec
